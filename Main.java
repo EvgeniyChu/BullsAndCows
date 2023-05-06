@@ -3,6 +3,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Main {
+    //TODO Вынеси в класс работы с консолью
+    //TODO И название лучше printGreeting типа напечатать приветствие
     private static void printSomething() {
         System.out.println("Давайте сыграем в игру 'Быки и коровы'");
         System.out.println("Я загадал 4-х значное число без повторения цифр");
@@ -13,6 +15,7 @@ public class Main {
 
     private static String pcNum = "";
 
+    //TODO Вынеси в класс, генерирующий число
     private static String generateNumber() {
         Random rand = new Random();
         String str = "";
@@ -22,12 +25,14 @@ public class Main {
             str += digits[i];
         }
         pcNum = str;
+        //Жестко ))
         while (checkDigits(pcNum)) {
             generateNumber();
         }
         return pcNum;
     }
 
+    //TODO Вынеси в класс, генерирующий число
     private static boolean checkDigits(String n) {
         for (int i = 0; i < n.length() - 1; i++) {
             for (int j = i + 1; j < n.length(); j++) {
@@ -39,6 +44,7 @@ public class Main {
         return false;
     }
 
+    //TODO Вынеси в класс например GameLogic
     private static int calculateBulls(String n1, String n2) {
         int count = 0;
 
@@ -50,6 +56,7 @@ public class Main {
         return count;
     }
 
+    //TODO Вынеси в класс например GameLogic
     private static int calculateCows(String n1, String n2) {
         int count = 0;
         for (int i = 0; i < n1.length(); i++) {
@@ -85,6 +92,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        //TODO Создание файла вынеси в класс, который будет работать с файлом
         String myFile = "file.txt";
         File file = new File(myFile);
         int countGames = 1;
@@ -93,6 +101,7 @@ public class Main {
                 FileReader fr = new FileReader(file);
                 BufferedReader reader = new BufferedReader(fr);
                 String line = reader.readLine();
+                //TODO Вычисление последнего номера игры тоже можно положить в GameLogic или в GameUtils
                 while (line != null) {
                     if (line.contains("Game")) {
                         countGames++;
@@ -105,6 +114,7 @@ public class Main {
         }
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        //TODO Date лучше не использовать. Используй LocalDate
         Date date = new Date(System.currentTimeMillis());
         Scanner sc = new Scanner(System.in);
         printSomething();
@@ -113,11 +123,13 @@ public class Main {
         int bulls = 0;
         int cows = 0;
         int tries = 1;
+        //TODO Поменяй название. Из названия непонятно что это за флаг
         boolean flag = true;
         String cow = "";
         String bull = "";
 
 
+        //TODO Запись в файл вынеси в класс работы с файлом
         try (FileWriter writer = new FileWriter("file.txt", true)) {
             writer.write("Game №" + countGames + " " + formatter.format(date) + " Загаданная строка " + pcNum);
             writer.append('\n');
@@ -130,12 +142,14 @@ public class Main {
                 bull = checkEndingBulls(bulls);
 
                 if (bulls == 4) {
+                    //TODO Вывод на консоль перенести в класс работы с консолью
                     System.out.println("\tЗапрос: " + myNum + "\tОтвет: " + cows + cow + bulls + bull);
                     System.out.println("\tСтрока была угадана за " + tries + " попыток.");
                     writer.write("\tЗапрос: " + myNum + "\tОтвет: " + cows + cow + bulls + bull);
                     writer.append('\n');
                     flag = false;
                 } else {
+                    //TODO Вывод на консоль перенести в класс работы с консолью
                     System.out.println("\tЗапрос: " + myNum + "\tОтвет: " + cows + cow + bulls + bull);
                     writer.write("\tЗапрос: " + myNum + "\tОтвет: " + cows + cow + bulls + bull);
                     writer.append('\n');
@@ -153,3 +167,21 @@ public class Main {
         }
     }
 }
+
+
+// Как примерно должно выглядеть
+// Game game = new Game();
+// game.start();
+
+//
+
+// start() {
+        //приветствие
+//      while(!gameOver) {
+//          String userAnswer = getUserAnswer();
+//          countResult(generatedString, userAnswer);
+//          printResult();
+//  }
+//      вывести окончание. Предложить сыграть еще раз
+//
+// }
