@@ -51,7 +51,6 @@ public class Game {
         Pattern regex=Pattern.compile("^\\d{3}$|^yes$");
         wc.playAgain();
         String ans = sc.next();
-        String no = "нет";
         if (regex.matcher(ans).find()) {Game.start();}
         else wc.goodbye();
     }
