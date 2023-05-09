@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Game {
     public static void start() {
@@ -42,5 +43,16 @@ public class Game {
             }
         }
         fw.writeAmountTries(tries);
+    }
+
+    public static void playAgain() {
+        WorkConsole wc = new WorkConsole();
+        Scanner sc = new Scanner(System.in);
+        Pattern regex=Pattern.compile("^\\d{3}$|^yes$");
+        wc.playAgain();
+        String ans = sc.next();
+        String no = "нет";
+        if (regex.matcher(ans).find()) {Game.start();}
+        else wc.goodbye();
     }
 }
