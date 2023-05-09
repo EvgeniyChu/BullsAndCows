@@ -17,7 +17,7 @@ public class WorkConsole {
     }
 
     public static void playAgain() {
-        System.out.println("Хотите ли вы сыграть снова: 'да/нет'");
+        System.out.println("Хотите ли вы сыграть снова: 'yes/no'");
     }
     public static void goodbye() {
         System.out.println("До свидания!");
