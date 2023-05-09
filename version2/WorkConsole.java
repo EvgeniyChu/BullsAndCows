@@ -15,4 +15,11 @@ public class WorkConsole {
     public static void printAmountTries (int x) {
         System.out.println("\tСтрока была угадана за " + x + " попыток.");
     }
+
+    public static void playAgain() {
+        System.out.println("Хотите ли вы сыграть снова: 'да/нет'");
+    }
+    public static void goodbye() {
+        System.out.println("До свидания!");
+    }
 }
