@@ -1,14 +1,17 @@
+package version2;
+
 import java.io.*;
 import java.time.LocalDate;
 
 public class FileWorker {
 
-    public static void writeNameGame (int x, Object LocalDate, String stroka)  {
+    //TODO stroka - это плохо, лучше line или что-нибудь подобное
+    public static void writeNameGame (int x, String stroka)  {
         String myFile = "file.txt";
         File file = new File(myFile);
 
         try (FileWriter writer  = new FileWriter(myFile, true);){
-            writer.write("Game №" + x + " " + LocalDate + " Загаданная строка " + stroka);
+            writer.write("Game №" + x + " " + LocalDate.now() + " Загаданная строка " + stroka);
             writer.append('\n');
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -41,6 +44,8 @@ public class FileWorker {
         }
 
     }
+
+    //TODO у тебя метод называется существует ли файл, а он тебе возвращает номер последней игры
     public static int ifFileExists () {
         String myFile = "file.txt";
         File file = new File(myFile);

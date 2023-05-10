@@ -1,19 +1,23 @@
-import java.time.LocalDate;
+package version2;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Game {
-    public static void start() {
-        GameLogic gl = new GameLogic();
-        FileWorker fw = new FileWorker();
-        WorkConsole wc = new WorkConsole();
-        GenerateNumber gen = new GenerateNumber();
-        LocalDate date = LocalDate.now();
+    public void start() {
+        //TODO если у тебя все методы в классах статические, то можно не создавать объекты этих классов
+//        GameLogic gl = new GameLogic();
+//        FileWorker fw = new FileWorker();
+//        WorkConsole wc = new WorkConsole();
+//        GenerateNumber gen = new GenerateNumber();
+        //TODO создание LocalDate можно перенести прямо в метод writeNameGame
+//        LocalDate date = LocalDate.now();
+        //TODO создание сканера можно перенести в класс WorkConsole
         Scanner sc = new Scanner(System.in);
-        int countGames = fw.ifFileExists();
-        wc.printGreetings();
-        gen.pcNum = "";
-        gen.generateNumber();
+        //TODO вычисление последней игры можно выполнять внутри FileWorker
+        int countGames = FileWorker.ifFileExists();
+        WorkConsole.printGreetings();
+        String generatedNumber = GenerateNumber.generateNumber();
         int bulls = 0;
         int cows = 0;
         int tries = 1;
@@ -21,37 +25,37 @@ public class Game {
         String cow = "";
         String bull = "";
 
-        fw.writeNameGame(countGames, date, gen.pcNum);
+        FileWorker.writeNameGame(countGames, generatedNumber);
 
         while (notFourBulls) {
-            wc.printGuessNumber(tries);
+            WorkConsole.printGuessNumber(tries);
             String myNum = sc.nextLine();
-            bulls = gl.calculateBulls(myNum, gen.pcNum);
-            cows = gl.calculateCows(myNum, gen.pcNum);
-            cow = gl.checkEndingCows(cows);
-            bull = gl.checkEndingBulls(bulls);
+            bulls = GameLogic.calculateBulls(myNum, generatedNumber);
+            cows = GameLogic.calculateCows(myNum, generatedNumber);
+            cow = GameLogic.checkEndingCows(cows);
+            bull = GameLogic.checkEndingBulls(bulls);
 
             if (bulls == 4) {
-                wc.printRequest(myNum, cow, bull, cows, bulls);
-                wc.printAmountTries(tries);
-                fw.writeRequest(myNum, cows, cow, bulls, bull);
+                WorkConsole.printRequest(myNum, cow, bull, cows, bulls);
+                WorkConsole.printAmountTries(tries);
+                FileWorker.writeRequest(myNum, cows, cow, bulls, bull);
                 notFourBulls = false;
             } else {
-                wc.printRequest(myNum, cow, bull, cows, bulls);
-                fw.writeRequest(myNum, cows, cow, bulls, bull);
+                WorkConsole.printRequest(myNum, cow, bull, cows, bulls);
+                FileWorker.writeRequest(myNum, cows, cow, bulls, bull);
                 tries++;
             }
         }
-        fw.writeAmountTries(tries);
+        FileWorker.writeAmountTries(tries);
+        playAgain();
     }
 
-    public static void playAgain() {
-        WorkConsole wc = new WorkConsole();
+    private void playAgain() {
         Scanner sc = new Scanner(System.in);
         Pattern regex=Pattern.compile("^\\d{3}$|^yes$");
-        wc.playAgain();
+        WorkConsole.playAgain();
         String ans = sc.next();
-        if (regex.matcher(ans).find()) {Game.start();}
-        else wc.goodbye();
+        if (regex.matcher(ans).find()) {start();}
+        else WorkConsole.goodbye();
     }
 }

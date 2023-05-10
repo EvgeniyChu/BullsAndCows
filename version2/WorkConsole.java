@@ -1,3 +1,5 @@
+package version2;
+
 public class WorkConsole {
     public static void printGreetings() {
         System.out.println("Давайте сыграем в игру 'Быки и коровы'");

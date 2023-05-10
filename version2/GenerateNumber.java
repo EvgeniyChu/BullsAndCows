@@ -1,8 +1,11 @@
+package version2;
+
 import java.util.Random;
 
 public class GenerateNumber {
 
-    public static String pcNum;
+    //TODO зачем тебе эта переменная
+//    public static String pcNum;
 
     public static String generateNumber() {
         Random rand = new Random();
@@ -12,12 +15,11 @@ public class GenerateNumber {
             digits[i] = rand.nextInt(10);
             str += digits[i];
         }
-        pcNum = str;
         //Жестко ))
-        while (checkDigits(pcNum)) {
-            generateNumber();
+        while (checkDigits(str)) {
+            return generateNumber();
         }
-        return pcNum;
+        return str;
     }
 
     public static boolean checkDigits(String n) {
